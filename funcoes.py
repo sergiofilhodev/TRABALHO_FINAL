@@ -77,7 +77,6 @@ def nome_conposto(nome, nome_aplicação):
     else:
         lista_nome = nome.split()
         if len(lista_nome) == 2:
-            print('oi')
             return nome
         else:
             print('-'*61+'\n\n'"A o nome do professor só tem que ter nome composto e sem acento.\n EX: 'Thomaz maia'\n")
