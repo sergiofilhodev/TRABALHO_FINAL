@@ -6,7 +6,7 @@ def verificador_dicionario(dicionario, nome_aplicação):
     if not len(dicionario) >= 1:
         print('===========================')
         print("Dicionario Vazio ❌.\n\n")
-        print(f"Cadastre pelo menos um {nome_aplicação}.")
+        print(f"Cadastre pelo menos um(a) {nome_aplicação}.")
         print('===========================')
         return False
     else:
@@ -230,8 +230,16 @@ def apagar_professor(dicionario):
             print("Professor apagado com sucesso ✅.")
 
     # Opçao [5]
-def visualizar_turmas_professor():
-    pass
+def visualizar_turmas_professor(dicionario_professor, dicionario_turma, nome_lista, ):
+    print('\n'+"="*16+'>PESQUISA<'+"="*16)
+    print(f"|{nome_lista:=^40}|")
+    print(f'|{"MATRICULA:":^11}{"NOME:":^29}{"TURMA:":^29}|')
+    for matricula, nome in dicionario.items():
+        print('|'+'-'*40+'|')
+        print(f'|{matricula:^11}-{nome:^28}{dicionario}|')
+    print('='*42)
+
+
     # Opçao [6]
 def visualizar_alunos_turma_professor():
     pass

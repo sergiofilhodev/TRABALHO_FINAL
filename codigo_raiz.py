@@ -68,13 +68,31 @@ while True:
                     print('Tchau 😢.')
                     continue
 
-
             elif op == '3':
                 ver_dados_professor(dicionario_professores)
             elif op == '4':
                 apagar_professor(dicionario_professores)
             elif op == '5':
-                visualizar_turmas_professor()
+                if verificador_dicionario(dicionario_turmas, 'turma') == False:
+                    continue
+                else:
+                    matricula_professor = input("Digite a matricula do professor ou '[s]'air:\n 🔦 ")
+                    if matricula_professor != 'S' or matricula_professor != 's':
+                        matricula_professor = verificador_matricula(matricula_professor, dicionario_professores)
+                        if matricula_professor == False:
+                            continue
+                        else:
+                            nome_professor = input("Digite o nome do professor para ver sua(s) turma(s) ou '[s]'air :\n 🔦 ")
+                            if nome_professor != 'S' or nome_professor != 's':
+                                nome_professor = verificador_nome(matricula_professor, nome_professor, dicionario_professores, 'professor')
+                                if nome_professor == False:
+                                    continue
+                                else:
+                                    visualizar_turmas_professor()
+                            elif nome_professor == 'S' or nome_professor == 's':
+                                continue
+                    elif matricula_professor == 'S' or matricula_professor == 's':
+                        continue
             elif op == '6':
                 visualizar_alunos_turma_professor()
                 
