@@ -70,9 +70,9 @@ while True:
 
 
             elif op == '3':
-                ver_dados_professor()
+                ver_dados_professor(dicionario_professores)
             elif op == '4':
-                apagar_professor()
+                apagar_professor(dicionario_professores)
             elif op == '5':
                 visualizar_turmas_professor()
             elif op == '6':
