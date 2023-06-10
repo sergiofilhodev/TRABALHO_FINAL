@@ -38,20 +38,34 @@ while True:
             op = menu_professores()
             # Menu [1]
             if op == '1':
-                nome_professor = input("\nDigite o nome do professor que irar cadastrar:\n 🔦 ")
-                nome_professor = nome_conposto(nome_professor, 'professor')
-                cadastrar_professor(nome_professor, dicionario_professores)
+                nome_professor = input("\nDigite o nome do professor que irar cadastrar ou digite 'sair':\n 🔦 ")
+                if nome_professor != 'sair':
+                    nome_professor = nome_conposto(nome_professor, 'professor')
+                    cadastrar_professor(nome_professor, dicionario_professores)
+                else:
+                    print("Tchau 😢.")
+                    continue
 
             # Menu [2]
             elif op == '2':
-                nome = input('-'*55+'\n'"Digite o nome do professor que voçê deseja procurar:\n 🔦 ")
+                nome = input('-'*55+'\n'"Digite o nome do professor que voçê deseja procurar ou digite 'sair':\n 🔦 ")
                 print('-'*25)
-                pesquisa_nomes(dicionario_professores, nome)
-                matricula = input('-'*55+'\n'"--Digite a matricula do professor:\n 🔦 ")
-                matricula = verificador_matricula(matricula, dicionario_professores)
-                nome_professor = input('-'*55+"\n"'Digite o nome do professor que queira editar:\n 🔦 ')
-                nome_professor = verificador_nome(matricula, nome_professor, dicionario_professores, 'professor')
-                editar_professor(matricula, nome_professor, dicionario_professores)
+                if nome != 'sair':
+                    pesquisa_nomes(dicionario_professores, nome)
+                    matricula = input('-'*55+'\n'"--Digite a matricula do professor ou digite 'sair':\n 🔦 ")
+                    if matricula != 'sair':
+                        matricula = verificador_matricula(matricula, dicionario_professores)
+                        nome_professor = input('-'*55+"\n"'Digite o nome do professor que queira editar ou digite "sair":\n 🔦 ')
+                        if nome_professor != 'sair':
+                            nome_professor = verificador_nome(matricula, nome_professor, dicionario_professores, 'professor')
+                            editar_professor(matricula, nome_professor, dicionario_professores)
+                        else:
+                            print('Tchau 😢.')
+                    else:
+                        print('Tchau 😢.')
+                else:
+                    print('Tchau 😢.')
+                    continue
 
 
             elif op == '3':

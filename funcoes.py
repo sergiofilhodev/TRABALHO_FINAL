@@ -1,12 +1,12 @@
 import json
 # Funções que iram se repetir
     # Verificador de Erros
-def verificador_dicionario(dicionario):
-    if len(dicionario) == 0:
+def verificador_dicionario(dicionario, nome_aplicação):
+    if not len(dicionario) >= 1:
         print('===========================')
         print("Dicionario Vazio ❌.")
         print()
-        print("Cadastre pelo menos um professor e um aluno")
+        print(f"Cadastre pelo menos {nome_aplicação}.")
         print('===========================')
         return False
     else:
@@ -39,8 +39,11 @@ def pesquisa_nomes(dicionario, nome):
         if len(dicionario_nomes) == 0:
             print(f"'{nome}' não encontrado ❌.")
             print('-'*55+"\n"'Tente novamente🔄.\n')
-            nome = input('-'*55+'\n'"Digite o nome novamente:\n 🔦 ")
-            pesquisa_nomes(dicionario, nome)
+            nome = input('-'*55+'\n'"Digite o nome novamente ou digite 'sair':\n 🔦 ")
+            if nome != 'sair':
+                pesquisa_nomes(dicionario, nome)
+            else:
+                print('Tchau 😢.')
 
         else:
             print("="*16+'>PESQUISA<'+"="*16)
@@ -55,47 +58,70 @@ def verificador_matricula(matricula, dicionario):
         return matricula
     else:
         print(f'Matricula "{matricula}" não existi.\n'+"-"*55)
-        matricula = input('-'*55+'\n'"Digite novamente a matricula:\n 🔦 ")
-        verificador_matricula(matricula, dicionario)
-        return False
+        matricula = input('-'*55+'\n'"Digite novamente a matricula ou digite 'sair':\n 🔦 ")
+        if matricula != 'sair':
+            verificador_matricula(matricula, dicionario)
+        else:
+            print("Tchau 😢.")
     
 def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
     if dicionario[matricula].lower() == nome.lower():
         return nome
     else:
         print(f'"{nome}" não existi.\n'+"="*55)
-        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao}:\n 🔦 ")
-        verificador_nome(matricula, nome, dicionario, nome_aplicacao)
-        return False
+        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao} ou digite 'sair':\n 🔦 ")
+        if nome != 'sair':
+            verificador_nome(matricula, nome, dicionario, nome_aplicacao)
+        else:
+            print('Tchau 😢.')
     
 
 def nome_conposto(nome, nome_aplicação):
     if nome.replace(' ','').isalpha() == False:
         print('-'*61+'\n\n'"\nA senha deve conter somente letras e sem acento.\n EX: 'Thomaz maia'\n")
-        nome = input('-'*61+'\n'f"Digite novamente o nome do {nome_aplicação}:\n 🔦 ")
-        nome_conposto(nome, nome_aplicação)
+        nome = input('-'*61+'\n'f"Digite novamente o nome do {nome_aplicação} ou digite 'sair':\n 🔦 ")
+        if nome == 'sair':
+            print('Tchau 😢.')
+        else:
+            nome_conposto(nome, nome_aplicação)
     else:
         lista_nome = nome.split()
         if len(lista_nome) == 2:
             return nome
         else:
             print('-'*61+'\n\n'"A o nome do professor só tem que ter nome composto e sem acento.\n EX: 'Thomaz maia'\n")
-            nome = input('-'*61+'\n\n'f"Digite novamente o nome do {nome_aplicação}:\n 🔦 ")
-            nome_conposto(nome, nome_aplicação)
+            nome = input('-'*61+'\n\n'f"Digite novamente o nome do {nome_aplicação} ou digite 'sair':\n 🔦 ")
+            if nome == 'sair':
+                print('Tchau 😢.')
+            else:
+                nome_conposto(nome, nome_aplicação)
+
+def ver_lista(dicionario, nome_lista):
+    print('\n'+"="*16+'>PESQUISA<'+"="*16)
+    print(f"|{nome_lista:=^40}|")
+    print(f'|{"MATRICULA":^11}{"NOME":^29}|')
+    for matricula, nome in dicionario.items():
+        print('|'+'-'*40+'|')
+        print(f'|{matricula:^11}-{nome:^28}|')
+    print('='*42)
 
 # ------------------------------------------------------------------------
 # Opções do menu das Turmas.
     # Opçao [1]
 def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores):
-    verificador_professor = verificador_dicionario(dicionario_professores)
-    verificador_aluno = verificador_dicionario(dicionario_alunos)
-    lista_alunos = dicionario_alunos.get('Materia')
-    if verificador_aluno == True and verificador_professor == True:
-        for alunos in lista_alunos:
-            print() 
-        return True
-    else:
-        return False
+    verificador_professor = verificador_dicionario(dicionario_professores, 'professor')
+    verificador_aluno = verificador_dicionario(dicionario_alunos, 'aluno')
+    if not verificador_professor == False and verificador_aluno == False:
+        matricula_professor = input("Digite a matricula do professor para a disciplina ou digite 'sair':\n 🔦 ")
+        if matricula_professor == 'sair':
+            print("Tchau 😢.")
+        else:
+            matricula_professor = verificador_matricula(matricula_professor, dicionario_professores)
+            nome_professor = input("Digite o nome do professor para a disciplina ou digite 'sair:\n 🔦 '")
+            if nome_professor == 'sair':
+                print("Tchau 😢.")
+            else:
+                nome_professor = verificador_nome(matricula_professor, dicionario_professores, 'professor')
     # Opçao [2]
 def editar_turma():
     pass
@@ -126,7 +152,7 @@ def editar_professor(matricula_professor, nome_professor, dicionario_professores
 
     # Opçao [3]
 def ver_dados_professor(dicionario):
-    nome_professor = input("Digite o nome do professor que deseja vê os dados: ")
+    nome_professor = input("Digite o nome do professor que deseja vê os dados:\n 🔦 ")
     matricula = 0
     professores = []
     for nome_professor in dicionario.values():
