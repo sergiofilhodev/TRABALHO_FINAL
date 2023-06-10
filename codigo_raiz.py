@@ -17,7 +17,8 @@ while True:
         while True:
             op = menu_turmas()
             if op == '1':
-                criar_turma(dicionario_turmas, dicionario_alunos, dicionario_professores)
+                nome_disciplina = input("Digite o nome da disciplina:\n 🔦 ").title()
+                criar_turma(dicionario_turmas, dicionario_alunos, dicionario_professores, nome_disciplina)
 
             elif op == '2':
                 editar_turma()
