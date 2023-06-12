@@ -36,5 +36,10 @@
 #     '4':'Assys Sousa'
 # }
 # pesquisa(dic)
-digite = input("ISSO ").title()
-print(digite)
+
+lista_alunos = [{'1':"sergio filho", "2":'sergio'}]
+dicionario_professores = {"1":"Sergio filho"}
+matricula_professor = "1"
+dic = {}
+dic[(matricula_professor,dicionario_professores[matricula_professor])] = lista_alunos
+print(dic)

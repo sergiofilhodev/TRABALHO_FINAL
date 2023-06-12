@@ -158,7 +158,7 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
                             aux = False
                 if aux == False:
                     dicionario = {}
-                    dicionario[dicionario_professores[matricula_professor]] = lista_alunos
+                    dicionario[(matricula_professor, dicionario_professores[matricula_professor])] = lista_alunos
                     dicionario_turma[nome_disciplina] = dicionario
                     print('\n--- Materia cadastrada com sucesso ---')
                     salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
