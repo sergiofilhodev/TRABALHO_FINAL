@@ -23,6 +23,7 @@ def menu_turmas():
  [2] - Editar turma.
  [3] - Ver turma.
  [4] - Apagar turma.
+ [5] - Ver todas as turmas.
 
 ===========================
     ''')
@@ -35,7 +36,7 @@ def menu_turmas():
 # Menu que da acesso ao CRUD dos Professores.
 def menu_professores():
     print('''
-===================>Menu dos Professores<===================
+===================>Menu dos Professores<====================
 
  [1] - Cadastrar Professor.
  [2] - Editar Professsor.

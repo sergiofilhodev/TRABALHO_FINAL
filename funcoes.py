@@ -28,6 +28,7 @@ def pesquisa_nomes(dicionario, nome):
     dicionario_nomes = {}
     if nome == 'sair':
         print('Tchau😢.')
+        return False
         pass
     else:
         for sobrenome in lista_nomes:
@@ -41,11 +42,12 @@ def pesquisa_nomes(dicionario, nome):
         if len(dicionario_nomes) == 0:
             print(f"'{nome}' não encontrado ❌.")
             print('-'*55+"\n\n"'Tente novamente🔄.\n')
-            nome = input('-'*55+'\n'"Digite o nome novamente ou digite 'sair':\n 🔦 ")
+            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[S]air':\n 🔦 ")
             if nome != 'sair':
                 pesquisa_nomes(dicionario, nome)
             else:
                 print('Tchau 😢.')
+                return False
 
         else:
             print("="*16+'>PESQUISA<'+"="*16)
@@ -169,27 +171,38 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
 
 
     # Opçao [2]
-def editar_turma():
-    pass
+def editar_turma(nome_turma, dicionario):
+    lista_disciplina = []
+    for nome_disciplinas in dicionario.keys():
+        lista_disciplina.append(nome_disciplinas)
+    if len(lista_disciplina) == 0:
+        print("Não existe turmas")
+        return False
+    else:
+
+
+
     # Opçao [3]
-def ver_turma():
-    pesquisa_nomes()
+def ver_turma(nome_turma):
     pass
     # Opçao [4]
 def apagar_turma():
     pass
 
-def ver_todas_turmas(dicionario, op):
+def ver_todas_turmas(dicionario):
     lista_disciplinas = []
     for nome_disciplinas in dicionario.keys():
         lista_disciplinas.append(nome_disciplinas)
     if len(lista_disciplinas) == 0:
-        return
-    aux = 0
-    for nome_disciplinas in lista_disciplinas:
-        aux += 1
-        print(f'|{aux:^5}{nome_disciplinas:^29}|')
-    return lista_disciplinas
+        print("Não existe Turmas")
+        return False
+    else:
+        aux = 0
+        print('='*+">Disciplinas<")
+        for nome_disciplinas in lista_disciplinas:
+            aux += 1
+            print('-'*36+'\n'+f'|{aux:^5}{nome_disciplinas:^29}|'+'\n'+'-'*36)
+        return lista_disciplinas
         
                 
 
@@ -248,48 +261,74 @@ def apagar_professor(dicionario):
             salvar_dicionarios(dicionario, 'dicionario_professor')
             print("Professor apagado com sucesso ✅.")
 
-    # Opçao [5]
-def visualizar_turmas_professor(dicionario_professor, dicionario_turma, nome_lista, nome_professor):
-    pesquisa_nomes(dicionario_professor, nome_professor)
-    matricula_digitada = input("Digite a matricula do professor que deseja visualizar as turmas:\n 🔦 ")
-    matricula_digitada = verificador_matricula(matricula_digitada, dicionario_professor)
-    print('\n'+"="*16+'>PESQUISA<'+"="*16)
-    print(f"|{nome_lista:=^42}|")
-    print('|'+'-'*42+'|')
+    # Opçao [5] ✅
+def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
     if matricula_digitada == False:
-        print("Tchau 😢.")
+        pass
     else:
-        for nome_disciplina in dicionario_turma.keys():
-            for matricula_professor in dicionario_turma[nome_disciplina].keys():
-                if matricula_professor == matricula_digitada:
-                    print(f'|{nome_disciplina:^42}|')
-                    print('='*42)
-                else:
-                    print("Esse professor não possui turma.")
-                    print('='*42)
+        print('\n'+"="*17+'>PESQUISA<'+"="*17)
+        print(f"|{nome_lista:=^42}|")
+        print('|'+'-'*42+'|')
+        if matricula_digitada == False:
+            print("Tchau 😢.")
+        else:
+            aux = True
+            for nome_disciplina in dicionario_turma.keys():
+                for matricula_professor in dicionario_turma[nome_disciplina].keys():
+                    if matricula_professor == matricula_digitada:
+                        print('='*44+'\n'f'|{nome_disciplina:^42}|'+'\n'+'='*44)
+                    else:
+                        aux = False
+            if aux == False:
+                print('='*44+'\n'f"|{'Esse professor não possui turma.':^42}|"'\n'+'='*44)
 
 
-    # Opçao [6]
+    # Opçao [6] 
 def visualizar_alunos_turma_professor():
     pass
 
 # ------------------------------------------------------------------------
 # Opções do Menu dos Alunos.
     # Opçao [1]
-def cadastrar_aluno(dicionario,lista_ids):
-    print('===========================')
-    nome_aluno = input("Digite o nome do aluno:\n 🔦 ")
-
-    lista_ids.append()
-    dicionario[id] = nome_aluno
-    print('===========================')
+def cadastrar_aluno(nome_aluno, dicionario):
+    dicionario = pegar_dicionario('dicionario_alunos')
+    matricula = 1
+    for matricula_chave in dicionario.keys():
+        matricula = int(matricula_chave) + 1
+    dicionario[matricula] = nome_aluno
+    if matricula in dicionario:
+        print(f"Alunos '{nome_aluno}' cadastrado")
+    salvar_dicionarios(dicionario,'dicionario_alunos')
 
     # Opçao [2]
-def editar_aluno():
-    pass
+def editar_aluno(matricula_aluno, nome_aluno, dicionario_alunos):
+    nome_aluno_novo = input(f'-'*55+'\n'"Digite o nome novo do Aluno '{nome_aluno}' ou digite '[s]'air:\n 🔦 ")
+    if nome_aluno_novo != 's' or nome_aluno_novo != 'S':
+        dicionario_alunos[matricula_aluno] = nome_aluno_novo
+        salvar_dicionarios(dicionario_alunos, 'dicionario_alunos')
+        print('-'*55+'\n\nEditador com sucesso✅.'+'\n'+'-'*55)
+    elif nome_aluno_novo == 's' or nome_aluno_novo == 'S':
+        print("Tchau 😢.")
+    else:
+        print("Opção invalida.")
+        editar_aluno(matricula_aluno, nome_aluno, dicionario_alunos)
+
+
     # Opçao [3]
-def visualizar_aluno():
-    pass
+def visualizar_aluno(dicionario, nome_aluno):
+    pegar_dicionario('dicionario_alunos')
+    if nome_aluno != 's' or nome_aluno != 'S':
+        pesquisa_nomes(dicionario, nome_aluno)
+    elif nome_aluno == 's' or nome_aluno == 'S':
+        print("Tchau 😢.")
+    else:
+        print("Opção invalida.")
+        visualizar_aluno(dicionario)
+
+
+
     # Opçao [4]
-def apagar_aluno():
-    pass
+def apagar_aluno(dicionario, matricula):
+    del dicionario[matricula]
+    salvar_dicionarios(dicionario, 'dicionario_alunos')
+    print("Aluno apagado com sucesso ✅.")
