@@ -198,10 +198,10 @@ def ver_todas_turmas(dicionario):
         return False
     else:
         aux = 0
-        print('='*+">Disciplinas<")
+        print('='*11+">Disciplinas<+'='*11")
         for nome_disciplinas in lista_disciplinas:
             aux += 1
-            print('-'*36+'\n'+f'|{aux:^5}{nome_disciplinas:^29}|'+'\n'+'-'*36)
+            print('-'*35+'\n'+f'|{aux:^5}{nome_disciplinas:^28}|'+'\n'+'-'*35)
         return lista_disciplinas
         
                 
