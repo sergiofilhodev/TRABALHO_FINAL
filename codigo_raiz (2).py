@@ -1,6 +1,6 @@
 # Importando todas as outras pastas.
-from funcoes import *
-from menus import *
+from funcoes import*
+from menus import*
 
 # Dicionario das Turmas.
 dicionario_turmas = pegar_dicionario('dicionario_turmas')
