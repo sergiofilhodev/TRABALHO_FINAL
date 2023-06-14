@@ -18,13 +18,11 @@ def menu_inicial():
 def menu_turmas():
     print('''
 =====>Menu das Turmas<=====
-
  [1] - Criar turma.
  [2] - Editar turma.
  [3] - Ver turma.
  [4] - Apagar turma.
  [5] - Ver todas as turmas.
-
 ===========================
     ''')
     op = input("Digite a opção desejada ou escreva 'voltar': ")
@@ -37,14 +35,12 @@ def menu_turmas():
 def menu_professores():
     print('''
 ===================>Menu dos Professores<====================
-
  [1] - Cadastrar Professor.
  [2] - Editar Professsor.
  [3] - Ver dados do professor.
  [4] - Apagar um professor.
  [5] - Visualizar as turmas do professor.
  [6] - Visualizar os alunos da turma de um professsor.
-
 =============================================================
     ''')
     op = input("Digite a opção desejada ou escreva 'voltar': ")
@@ -57,15 +53,23 @@ def menu_professores():
 def menu_alunos():
     print('''
 ==========>Menu dos Alunos<==========
-
  [1] - Cadastrar Aluno.
  [2] - Editar Aluno.
  [3] - Visualizar Alunos.
  [4] - Apagar Aluno.
-
 =====================================
     ''')
-    op = input("Digite a opção desejada ou escreva 'voltar': ")
-    print()
-    print('=====================================')
+    op = input("Digite a opção desejada ou escreva '[S]'air: ")
+    print('\n=====================================')
+    return op
+
+def menu_edita_turma():
+    print('''
+==========>Menu da edição<==========
+[1] - Trocar professor.
+[2] - Deletar aluno.
+[3] - Inserir aluno.
+====================================
+    ''')
+    op = input("Digite um opção ou digite '[S]'air:\n 🔦 ")
     return op

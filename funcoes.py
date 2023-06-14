@@ -116,7 +116,20 @@ def ver_lista(dicionario, nome_lista):
         print(f'|{matricula:^11}-{nome:^28}|')
     print('='*42)
 
-## {nome_disciplina: {matricula_prof: {nome_prof: [{matricula_aluno: nome_aluno}, {}]}}
+def mostrar_tudo(pergunta, dicionario, lista_materia):
+    print('|'+'='*41+'|')
+    print(f'|{"Matricula":^20}|{"Nome":^20}|')
+    for matricula_professor, nome in dicionario[lista_materia[int(pergunta)-1]].items():
+        for nome_professor, alunos in nome.items():
+            print(f"|{'Professor':^41}|")
+            print(f'|{matricula_professor:^20}|{nome_professor:^20}|')
+            print(f"|{'Aluno(s)':^41}|")
+            for lista in alunos:
+                for matricula_alunos, nomes_alunos in lista.items():
+                    print('|'+'-'*41+'|')
+                    print(f'|{matricula_alunos:^20}|{nomes_alunos:^20}|')
+                    print('|'+'-'*41+'|')
+    print('|'+'='*41+'|')
 
 
 # ------------------------------------------------------------------------
@@ -171,24 +184,20 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
 
 
     # Opçao [2]
-def editar_turma(nome_turma, dicionario):
-    lista_disciplina = []
-    for nome_disciplinas in dicionario.keys():
-        lista_disciplina.append(nome_disciplinas)
-    if len(lista_disciplina) == 0:
-        print("Não existe turmas")
-        return False
-    else:
-
-
+def editar_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos):
+    dicionario[nome_turma] = {matricula_professor:{novo_professor:lista_alunos}}
+    if nome_turma in dicionario:
+        print("\nProfessor trocado com sucesso ✅.")
 
     # Opçao [3]
 def ver_turma(nome_turma):
     pass
     # Opçao [4]
-def apagar_turma():
-    pass
+def apagar_turma(dicionario, nome_turma):
+    del dicionario[nome_turma]
 
+    pass
+    # Opção [5]
 def ver_todas_turmas(dicionario):
     lista_disciplinas = []
     for nome_disciplinas in dicionario.keys():
@@ -198,10 +207,11 @@ def ver_todas_turmas(dicionario):
         return False
     else:
         aux = 0
-        print('='*11+">Disciplinas<+'='*11")
+        print('='*11+"=>Disciplinas<"+'='*11)
         for nome_disciplinas in lista_disciplinas:
             aux += 1
-            print('-'*35+'\n'+f'|{aux:^5}{nome_disciplinas:^28}|'+'\n'+'-'*35)
+            print('-'*36+'\n'+f'|{aux:^5}|{nome_disciplinas:^28}|'+'\n'+'-'*36)
+        print('='*36)
         return lista_disciplinas
         
                 

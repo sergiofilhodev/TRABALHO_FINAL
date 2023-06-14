@@ -17,14 +17,62 @@ while True:
         while True:
             op = menu_turmas()
 
-
             # menu [1] ✅
             if op == '1':
-                nome_disciplina = input('-'*55+'\n'+"Digite o nome da disciplina:\n 🔦 ").title()
-                criar_turma(dicionario_turmas, dicionario_alunos, dicionario_professores, nome_disciplina)
+                nome_disciplina = input('-'*55+'\n'+"Digite o nome da disciplina ou digite '[S]'air:\n 🔦 ").title()
+                if nome_disciplina == 'S' or nome_disciplina.lower() == 's':
+                    print("Tchau 😢.")
+                    continue
+                else:
+                    criar_turma(dicionario_turmas, dicionario_alunos, dicionario_professores, nome_disciplina)
 
             elif op == '2':
-                editar_turma()
+                lista_materia = ver_todas_turmas(dicionario_turmas)
+                if lista_materia == False:
+                    pass
+                else:
+                    opcao = input('-'*55+'\n'+"Digite o numero da materia que deseja mostrar os alunos editar ou digite '[S]'air:\n 🔦 ")
+                    if opcao == "S":
+                        pass
+                    else:
+                        mostrar_tudo(opcao, dicionario_turmas, lista_materia)
+                        while True:
+                            op = menu_edita_turma()
+                            if op == 'S' or op == 's':
+                                print("Tchau 😢.")
+                                break
+                            elif op == '1':
+                                if verificador_dicionario(dicionario_turmas, 'turmas') == False:
+                                    continue
+                                else:
+                                    for nome_disciplina, matricula_professor in dicionario_turmas.items():
+                                        if nome_disciplina == dicionario_turmas[lista_materia[int(opcao)-1]]:
+                                            lista_materia.append()
+                                            for nome_professor, lista_alunos in matricula_professor.items():
+                                                lista_alunos = lista_alunos
+                                    matricula_professor = input("Digite a matricula do professor novo ou digite '[F]' para cancelar a troca:\n 🔦 ")
+                                    if matricula_professor == 'F' or matricula_professor == 'f':
+                                        print('Operação Cancelada.')
+                                    else:
+                                        matricula_professor = verificador_matricula(matricula_professor, dicionario_professores)
+                                        if matricula_professor == False:
+                                            continue
+                                        else:
+                                                ver_lista(dicionario_professores, 'Lista dos professores')
+                                                matricula_professor = input("Digite a matricula do professor:\n 🔦 ")
+                                                matricula_professor = verificador_matricula(matricula_professor, dicionario_professores)
+                                                if matricula_professor == False:
+                                                    continue
+                                                else:
+                                                    novo_professor = input("Digite o novo nome do professor ou digite '[F]' para cancelar a troca:\n 🔦 ")
+                                                    if novo_professor == "F" or novo_professor == 'f':
+                                                        print('Operação Cancelada.')
+                                                    else:
+                                                        novo_professor = verificador_nome(matricula_professor, novo_professor, dicionario_professores, 'professor')
+                                                        if novo_professor == False:
+                                                            continue
+                                                        else:
+                                                            editar_turma(lista_materia[int(opcao)-1], dicionario_turmas, matricula_professor, novo_professor, lista_alunos)
             elif op == '3':
                 ver_turma()
             elif op == '4':
@@ -33,24 +81,16 @@ while True:
 
             # menu [5] ✅
             elif op == '5':
+                verificador_dicionario(dicionario_turmas, 'turma')
                 lista_materia = ver_todas_turmas(dicionario_turmas)
                 if lista_materia == False:
                     continue
                 else:
-                    opcao = int(input('-'*55+'\n'+"Digite a opção desejada ou '[S]'air: "))-1
+                    opcao = input('-'*55+'\n'+"Digite a materia desejada ou digite '[S]'air: ")
                     if opcao == "S" or opcao == 's':
                         pass
                     else:
-                        print('|'+'='*40+'|')
-                        print(f'|{"Matricula":^20}{"Nome":^20}|')
-                        for matricula_professor, nome in dicionario_turmas[lista_materia[int(opcao)-1]].items():
-                            for nome_professor, alunos in nome.items():
-                                for lista in alunos:
-                                    for matricula_alunos, nomes_alunos in lista.items():
-                                        print('|'+'-'*40+'|')
-                                        print(f'|{matricula_alunos:^20}{nomes_alunos:^20}|')
-                                        print('|'+'-'*40+'|')
-                        print('|'+'='*40+'|')
+                        mostrar_tudo(opcao, dicionario_turmas, lista_materia)
 
 
             elif op == 'voltar':
