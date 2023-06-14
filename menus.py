@@ -20,9 +20,8 @@ def menu_turmas():
 =====>Menu das Turmas<=====
  [1] - Criar turma.
  [2] - Editar turma.
- [3] - Ver turma.
+ [3] - Ver turma ou Ver todas as turmas.
  [4] - Apagar turma.
- [5] - Ver todas as turmas.
 ===========================
     ''')
     op = input("Digite a opção desejada ou escreva 'voltar': ")

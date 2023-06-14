@@ -24,38 +24,12 @@ def pegar_dicionario(nome_do_arquivo):
 
 # Função de pesquisa nomes
 def pesquisa_nomes(dicionario, nome):
-    lista_nomes = nome.split()
-    dicionario_nomes = {}
+    lista_nome = nome.split()
     if nome == 'sair':
         print('Tchau😢.')
         return False
-        pass
     else:
-        for sobrenome in lista_nomes:
-            for matricula, nomes in dicionario.items():
-                if not matricula in dicionario_nomes:
-                    for palavras in nomes.split():
-                        if sobrenome.lower() == palavras.lower():
-                            dicionario_nomes[matricula] = nomes
-                        else:
-                            pass
-        if len(dicionario_nomes) == 0:
-            print(f"'{nome}' não encontrado ❌.")
-            print('-'*55+"\n\n"'Tente novamente🔄.\n')
-            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[S]air':\n 🔦 ")
-            if nome != 'sair':
-                pesquisa_nomes(dicionario, nome)
-            else:
-                print('Tchau 😢.')
-                return False
-
-        else:
-            print("="*16+'>PESQUISA<'+"="*16)
-            print(f'|{"MATRICULA:":^11}{"NOME:":^29}|')
-            for matricula, nome in dicionario_nomes.items():
-                print('|'+'-'*40+'|')
-                print(f'|{matricula:^11}-{nome:^28}|')
-            print('='*42)
+        ver_todos(dicionario, lista_nome)
 
 # Função de verificar se a matricula existi no dicionario
 def verificador_matricula(matricula, dicionario):
@@ -84,7 +58,7 @@ def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
             return False
 
 # Função de verificação de nome segui a regra do sistema
-def nome_conposto(nome, nome_aplicação):
+def nome_composto(nome, nome_aplicação):
     if nome.replace(' ','').isalpha() == False:
         print('-'*61+'\n\n'"\nA senha deve conter somente letras e sem acento.\n EX: 'Thomaz maia'\n")
         nome = input('-'*61+'\n'f"Digite novamente o nome do {nome_aplicação} ou digite 'sair':\n 🔦 ")
@@ -92,7 +66,7 @@ def nome_conposto(nome, nome_aplicação):
             print('Tchau 😢.')
             return False
         else:
-            nome_conposto(nome, nome_aplicação)
+            nome_composto(nome, nome_aplicação)
     else:
         lista_nome = nome.split()
         if len(lista_nome) == 2:
@@ -104,7 +78,8 @@ def nome_conposto(nome, nome_aplicação):
                 print('Tchau 😢.')
                 return False
             else:
-                nome_conposto(nome, nome_aplicação)
+                nome_composto(nome, nome_aplicação)
+
 
 # Função de ver a lista de qualquer dicionario
 def ver_lista(dicionario, nome_lista):
@@ -130,6 +105,49 @@ def mostrar_tudo(pergunta, dicionario, lista_materia):
                     print(f'|{matricula_alunos:^20}|{nomes_alunos:^20}|')
                     print('|'+'-'*41+'|')
     print('|'+'='*41+'|')
+
+
+def ver_todos(dicionario, lista_nome, matricula_digitada=False):
+    if lista_nome != False and matricula_digitada == False:
+        dicionario_nomes = {}
+        for sobrenome in lista_nome:
+            for matricula, nomes in dicionario.items():
+                if not matricula in dicionario_nomes:
+                    for palavras in nomes.split():
+                        if sobrenome.lower() == palavras.lower():
+                            dicionario_nomes[matricula] = nomes
+                        else:
+                            pass
+    else:
+        dicionario_nomes = {}
+        for nome_disciplina, valores in dicionario.items():
+            for matricula_professor , valores in valores.items():
+                if not matricula_professor in dicionario_nomes:
+                    for nome_professor, lista_alunos in valores.items():
+                        for aluno in lista_alunos:
+                            for matricula_aluno, nome_aluno in aluno.items():
+                                dicionario_nomes[matricula_aluno] = nome_aluno
+        if len(dicionario_nomes) == 0:
+            print(f"'{nome}' não encontrado ❌.")
+            print('-'*55+"\n\n"'Tente novamente🔄.\n')
+            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[S]air':\n 🔦 ")
+            if nome != 'sair':
+                if not lista_nome == False:
+                    pesquisa_nomes(dicionario, nome)
+                else:
+                    ver_todos(dicionario)
+            else:
+                print('Tchau 😢.')
+                return False
+        else:
+            if matricula_professor != False:
+                print(f"|{nome_disciplina:=^40}|")
+            print("="*16+'>PESQUISA<'+"="*16)
+            print(f'|{"MATRICULA:":^11}{"NOME:":^29}|')
+            for matricula, nome in dicionario_nomes.items():
+                print('|'+'-'*40+'|')
+                print(f'|{matricula:^11}-{nome:^28}|')
+            print('='*42)
 
 
 # ------------------------------------------------------------------------
@@ -188,10 +206,11 @@ def editar_turma(nome_turma, dicionario, matricula_professor, novo_professor, li
     dicionario[nome_turma] = {matricula_professor:{novo_professor:lista_alunos}}
     if nome_turma in dicionario:
         print("\nProfessor trocado com sucesso ✅.")
+        salvar_dicionarios(dicionario, 'dicionario_turmas')
 
     # Opçao [3]
-def ver_turma(nome_turma):
-    pass
+def ver_turma(nome_turma, dicionario, opcao):
+    mostrar_tudo(nome_turma, dicionario, opcao)
     # Opçao [4]
 def apagar_turma(dicionario, nome_turma):
     del dicionario[nome_turma]
@@ -213,8 +232,6 @@ def ver_todas_turmas(dicionario):
             print('-'*36+'\n'+f'|{aux:^5}|{nome_disciplinas:^28}|'+'\n'+'-'*36)
         print('='*36)
         return lista_disciplinas
-        
-                
 
 # ------------------------------------------------------------------------
 # Opções do menu dos Professores.
@@ -276,26 +293,31 @@ def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada
     if matricula_digitada == False:
         pass
     else:
-        print('\n'+"="*17+'>PESQUISA<'+"="*17)
+        print('\n'+"="*17+'>Turmas<'+"="*17)
         print(f"|{nome_lista:=^42}|")
-        print('|'+'-'*42+'|')
         if matricula_digitada == False:
             print("Tchau 😢.")
         else:
-            aux = True
+            aux = False
             for nome_disciplina in dicionario_turma.keys():
                 for matricula_professor in dicionario_turma[nome_disciplina].keys():
                     if matricula_professor == matricula_digitada:
                         print('='*44+'\n'f'|{nome_disciplina:^42}|'+'\n'+'='*44)
-                    else:
-                        aux = False
+                        aux = True
+
             if aux == False:
                 print('='*44+'\n'f"|{'Esse professor não possui turma.':^42}|"'\n'+'='*44)
 
 
     # Opçao [6] 
-def visualizar_alunos_turma_professor():
-    pass
+# def visualizar_alunos_turma_professor(matricula_professor, dicionario):
+#     if matricula_professor == False:
+#         pass
+#     else:
+#         for nome_turmas, valores in dicionario.items():
+#             if valores == matricula_professor:
+#                 ver_todos(dicionario, False, matricula_professor)
+
 
 # ------------------------------------------------------------------------
 # Opções do Menu dos Alunos.
