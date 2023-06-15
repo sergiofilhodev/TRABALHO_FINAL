@@ -8,9 +8,8 @@ def menu_inicial():
  [3] - Alunos.
 ==================
     ''')
-    op = input("Digite a opção desejada ou escreva 'sair': ")
-    print()
-    print('==================')
+    op = input("Digite a opção desejada ou digite '[F]' para fecha o programa:\n 🔦 ")
+    print('\n==================')
     return op
 
 # ------------------------------------------------------------------------
@@ -24,9 +23,8 @@ def menu_turmas():
  [4] - Apagar turma.
 ===========================
     ''')
-    op = input("Digite a opção desejada ou escreva 'voltar': ")
-    print()
-    print('===========================')
+    op = input("Digite a opção desejada ou digite '[V]' para voltar:\n 🔦 ")
+    print('\n===========================')
     return op
 
 # ------------------------------------------------------------------------
@@ -36,15 +34,15 @@ def menu_professores():
 ===================>Menu dos Professores<====================
  [1] - Cadastrar Professor.
  [2] - Editar Professsor.
- [3] - Ver dados do professor.
+ [3] - Ver dados dos professores.
  [4] - Apagar um professor.
  [5] - Visualizar as turmas do professor.
  [6] - Visualizar os alunos da turma de um professsor.
 =============================================================
     ''')
-    op = input("Digite a opção desejada ou escreva 'voltar': ")
-    print()
-    print('=============================================================')
+
+    op = input("Digite a opção desejada ou digite '[V]' para voltar:\n 🔦 ")
+    print('\n=============================================================')
     return op
 
 # ------------------------------------------------------------------------
@@ -58,7 +56,7 @@ def menu_alunos():
  [4] - Apagar Aluno.
 =====================================
     ''')
-    op = input("Digite a opção desejada ou escreva '[S]'air: ")
+    op = input("Digite a opção desejada ou escreva '[V]' para voltar:\n 🔦 ")
     print('\n=====================================')
     return op
 
@@ -70,5 +68,6 @@ def menu_edita_turma():
 [3] - Inserir aluno.
 ====================================
     ''')
-    op = input("Digite um opção ou digite '[S]'air:\n 🔦 ")
+    op = input("Digite um opção ou digite '[F]' para sair:\n 🔦 ")
+    print("\n====================================")
     return op
