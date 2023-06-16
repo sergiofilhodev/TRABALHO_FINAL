@@ -35,14 +35,14 @@ while True:
                 if lista_materia == False:
                     pass
                 else:
-                    opcao = input('-'*55+'\n'+"Digite o numero da materia que deseja mostrar os alunos e editar ou digite '[S]'air:\n 🔦 ")
-                    if opcao == "S":
+                    opcao = input('-'*55+'\n'+"Digite o numero da materia que deseja mostrar os alunos e editar ou digite '[F]' para cancelar a operação:\n 🔦 ")
+                    if opcao == 'f' or opcao == 'F':
                         pass
                     else:
                         mostrar_tudo(opcao, dicionario_turmas, lista_materia)
                         while True:
                             op = menu_edita_turma()
-                            if op == 'S' or op == 's':
+                            if op == 's' or op == 'S':
                                 print("Tchau 😢.")
                                 break
                             elif op == '1':
