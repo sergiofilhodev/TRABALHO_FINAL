@@ -18,7 +18,7 @@ def salvar_dicionarios(dicionario, nome_do_arquivo):
         json.dump(dicionario, file)
 
 # Função de Carregar
-def pegar_dicionario(nome_do_arquivo):
+def carregar_dicionario(nome_do_arquivo):
     with open(f'{nome_do_arquivo}.json', 'r') as file:
         return json.load(file)
 
@@ -258,7 +258,7 @@ def ver_todas_turmas(dicionario):
 # Opções do menu dos Professores.
     # Opçao [1] ✅
 def cadastrar_professor(nome_professor, dicionario):
-    dicionario = pegar_dicionario('dicionario_professor')
+    dicionario = carregar_dicionario('dicionario_professor')
     matricula = 1
     for matricula_chave in dicionario.keys():
         matricula = int(matricula_chave) + 1
@@ -268,7 +268,7 @@ def cadastrar_professor(nome_professor, dicionario):
     
     # Opçao [2] ✅
 def editar_professor(matricula_professor, nome_professor, dicionario_professores):
-    dicionario_professores = pegar_dicionario('dicionario_professor')
+    dicionario_professores = carregar_dicionario('dicionario_professor')
     nome_professor_novo = input(f'-'*55+'\n'"Digite o nome novo do professor '{nome_professor}' ou digite '[s]'air:\n 🔦 ")
     if nome_professor_novo == 's' or nome_professor_novo == 'S':
         print("Tchau 😢.")
@@ -285,7 +285,7 @@ def editar_professor(matricula_professor, nome_professor, dicionario_professores
 
     # Opçao [3] ✅
 def ver_dados_professor(dicionario):
-    dicionario = pegar_dicionario('dicionario_professor')
+    dicionario = carregar_dicionario('dicionario_professor')
     ver_todos(dicionario, False)
 
 
@@ -330,7 +330,7 @@ def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada
 # Opções do Menu dos Alunos.
     # Opçao [1]
 def cadastrar_aluno(nome_aluno, dicionario):
-    dicionario = pegar_dicionario('dicionario_alunos')
+    dicionario = carregar_dicionario('dicionario_alunos')
     matricula = 1
     for matricula_chave in dicionario.keys():
         matricula = int(matricula_chave) + 1
@@ -341,7 +341,7 @@ def cadastrar_aluno(nome_aluno, dicionario):
 
     # Opçao [2]
 def editar_aluno(matricula_aluno, nome_aluno, dicionario_alunos):
-    dicionario_alunos = pegar_dicionario('dicionario_alunos')
+    dicionario_alunos = carregar_dicionario('dicionario_alunos')
     nome_aluno_novo = input('-'*55+'\n'f"Digite o nome novo do Aluno '{nome_aluno}' ou digite '[f]' para cancelar a operação:\n 🔦 ")
     if nome_aluno_novo == 'f' or nome_aluno_novo == 'F':
         print("Tchau 😢.")
@@ -354,7 +354,7 @@ def editar_aluno(matricula_aluno, nome_aluno, dicionario_alunos):
 
     # Opçao [3]
 def visualizar_aluno(dicionario):
-    dicionario = pegar_dicionario('dicionario_alunos')
+    dicionario = carregar_dicionario('dicionario_alunos')
     ver_todos(dicionario, False)
 
 

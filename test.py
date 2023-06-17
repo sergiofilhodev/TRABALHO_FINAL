@@ -53,33 +53,48 @@
 #             print(dicionario_turma.keys())
 
 
-def ver_todas_turmas(dicionario):
-    lista_disciplinas = []
-    for nome_disciplinas in dicionario.keys():
-        lista_disciplinas.append(nome_disciplinas)
-    if len(lista_disciplinas) == 0:
-        return
-    aux = 0
-    for nome_disciplinas in lista_disciplinas:
-        aux += 1
-        print(f'|{aux:^5}{nome_disciplinas:^29}|')
-    return lista_disciplinas    
+# def ver_todas_turmas(dicionario):
+#     lista_disciplinas = []
+#     for nome_disciplinas in dicionario.keys():
+#         lista_disciplinas.append(nome_disciplinas)
+#     if len(lista_disciplinas) == 0:
+#         return
+#     aux = 0
+#     for nome_disciplinas in lista_disciplinas:
+#         aux += 1
+#         print(f'|{aux:^5}{nome_disciplinas:^29}|')
+#     return lista_disciplinas    
 
 
-dicionario_turmas = {"Matematica": {"2": {"S\u00e9rgio Filho": [{"1": "sergio filho"},{"2": "Vitoria Matos"}]}}, "Historia": {"2": {"S\u00e9rgio Filho": [{"1": "sergio filho"}, {"2": "Vitoria Matos"}]}}}
-lista_materia = ver_todas_turmas(dicionario_turmas)
+# dicionario_turmas = {"Matematica": {"2": {"S\u00e9rgio Filho": [{"1": "sergio filho"},{"2": "Vitoria Matos"}]}}, "Historia": {"2": {"S\u00e9rgio Filho": [{"1": "sergio filho"}, {"2": "Vitoria Matos"}]}}}
+# lista_materia = ver_todas_turmas(dicionario_turmas)
 
-opcao = input("Digite a opção desejada ou '[S]'air: ")
-if opcao == "S" or opcao == 's':
-    pass
-else:
-    print('|'+'='*40+'|')
-    print(f'|{"Matricula":^20}{"Nome":^20}|')
-    for matricula_professor, nome in dicionario_turmas[lista_materia[int(opcao)-1]].items():
-        for nome_professor, alunos in nome.items():
-            for lista in alunos:
-                for matricula_alunos, nomes_alunos in lista.items():
-                    print('|'+'-'*40+'|')
-                    print(f'|{matricula_alunos:^20}{nomes_alunos:^20}|')
-                    print('|'+'-'*40+'|')
-    print('|'+'='*40+'|')
+# opcao = input("Digite a opção desejada ou '[S]'air: ")
+# if opcao == "S" or opcao == 's':
+#     pass
+# else:
+#     print('|'+'='*40+'|')
+#     print(f'|{"Matricula":^20}{"Nome":^20}|')
+#     for matricula_professor, nome in dicionario_turmas[lista_materia[int(opcao)-1]].items():
+#         for nome_professor, alunos in nome.items():
+#             for lista in alunos:
+#                 for matricula_alunos, nomes_alunos in lista.items():
+#                     print('|'+'-'*40+'|')
+#                     print(f'|{matricula_alunos:^20}{nomes_alunos:^20}|')
+#                     print('|'+'-'*40+'|')
+#     print('|'+'='*40+'|')
+dicionario_aluno = {"1": "Kauan Emanuel", "2": "Anderson Lucas", "3": "Yasmim Moura"}
+dicionario_professor = {"1": "Thomaz maia", "3": "Cataryna Fontenele"}
+dicionario_turma = {"Matematica": {"3": {"Cataryna Fontenele": [{"1": "Kauan Emanuel"}, {"2": "Anderson Lucas"}]}}}
+
+def menu_edita_turma():
+    print('''
+==========>Menu da edição<==========
+[1] - Trocar professor.
+[2] - Deletar aluno.
+[3] - Inserir aluno.
+====================================
+    ''')
+    op = input("Digite um opção ou digite '[F]' para sair:\n 🔦 ")
+    print("\n====================================")
+    return op

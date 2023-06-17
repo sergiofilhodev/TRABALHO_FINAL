@@ -3,11 +3,11 @@ from funcoes import*
 from menus import*
 
 # Dicionario das Turmas.
-dicionario_turmas = pegar_dicionario('dicionario_turmas')
+dicionario_turmas = carregar_dicionario('dicionario_turmas')
 # Dicionario dos Professores.
-dicionario_professores = pegar_dicionario('dicionario_professor')
+dicionario_professores = carregar_dicionario('dicionario_professor')
 # Dicionario dos Alunos.
-dicionario_alunos = pegar_dicionario('dicionario_alunos')
+dicionario_alunos = carregar_dicionario('dicionario_alunos')
 
 # Logica raiz do programa.
 while True:
@@ -99,7 +99,7 @@ while True:
                 if verificador_dicionario(dicionario_turmas, 'turmas') == False:
                     continue
                 else:
-                    dicionario_turmas = pegar_dicionario('dicionario_turmas')
+                    dicionario_turmas = carregar_dicionario('dicionario_turmas')
                     lista_turmas = ver_todas_turmas(dicionario_turmas)
                     if lista_turmas == False:
                         continue
@@ -163,7 +163,7 @@ while True:
                 if  verificador_dicionario(dicionario_professores, 'professor') == False:
                     continue
                 else:
-                    pegar_dicionario('dicionario_professor')
+                    carregar_dicionario('dicionario_professor')
                     ver_dados_professor(dicionario_professores)
 
 
@@ -232,7 +232,7 @@ while True:
                 if verificador_dicionario(dicionario_alunos, 'aluno') == False:
                     continue
                 else:
-                    dicionario_alunos = pegar_dicionario('dicionario_alunos')
+                    dicionario_alunos = carregar_dicionario('dicionario_alunos')
                     ver_todos(dicionario_alunos, False)
                     matricula_aluno = input('-'*55+'\n'+"Digite a matricula do aluno que deseja editar:\n 🔦 ")
                     matricula_aluno = verificador_matricula(matricula_aluno, dicionario_alunos)
@@ -255,7 +255,7 @@ while True:
                 if verificador_dicionario(dicionario_alunos, 'aluno') == False:
                     continue
                 else:
-                    dicionario_alunos = pegar_dicionario('dicionario_alunos')
+                    dicionario_alunos = carregar_dicionario('dicionario_alunos')
                     ver_todos(dicionario_alunos, False)
                     matricula_aluno = input("Digite o numero da matricula do aluno que deseja apagar ou digite '[F]' para cancelar a operação:\n 🔦 ")
                     if matricula_aluno == 'f' or matricula_aluno == 'F':
