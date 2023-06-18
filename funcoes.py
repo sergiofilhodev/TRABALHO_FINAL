@@ -86,15 +86,17 @@ def ver_todos(dicionario, lista_nome):
 # Função de verificar se a matricula existi no dicionario
 def verificador_matricula(matricula, dicionario):
     if matricula in dicionario.keys():
+        print(matricula)
         return matricula
     else:
-        print(f'Matricula "{matricula}" não existi.\n'+"-"*55)
-        matricula = input('-'*55+'\n'"Digite novamente a matricula ou digite 'sair':\n 🔦 ")
-        if matricula == 'f' or matricula == 'F':
+        print(f'Matricula "{matricula}" não existe.\n'+"-"*55)
+        matricula_novamente = input('-'*55+'\n'"Digite novamente a matricula ou digite '[V]' para cancelar a operação:\n 🔦 ")
+        if matricula_novamente == 'f' or matricula_novamente == 'F':
             print("Tchau 😢.")
             return False
         else:
-            verificador_matricula(matricula, dicionario)
+            return verificador_matricula(matricula_novamente, dicionario)
+
 
 # Função de verificar se o nome existi no dicionario
 def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
@@ -102,12 +104,12 @@ def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
         return nome
     else:
         print(f'"{nome}" não existi.\n'+"="*55)
-        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao} ou digite 'sair':\n 🔦 ")
-        if not nome == 'sair':
-            verificador_nome(matricula, nome, dicionario, nome_aplicacao)
-        else:
+        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao} ou digite '[V]' para cancelar a operação:\n 🔦 ")
+        if nome in 'vV':
             print('Tchau 😢.')
             return False
+        else:
+            verificador_nome(matricula, nome, dicionario, nome_aplicacao)
 
 # Função de verificação de nome segui a regra do sistema
 def nome_composto(nome, nome_aplicação):
@@ -156,11 +158,10 @@ def mostrar_tudo(pergunta, dicionario, lista_materia):
             print(f"|{'Aluno(s)':=^41}|")
             print('|'+'-'*41+'|')
             for lista_aluno in alunos:
-                for alunos in lista_aluno:
-                    for matricula_alunos, nomes_alunos in alunos.items():
-                        print('|'+'-'*41+'|')
-                        print(f'|{matricula_alunos:^15}|{nomes_alunos:^25}|')
-                        print('|'+'-'*41+'|')
+                for matricula_alunos, nomes_alunos in lista_aluno.items():
+                    print('|'+'-'*41+'|')
+                    print(f'|{matricula_alunos:^15}|{nomes_alunos:^25}|')
+                    print('|'+'-'*41+'|')
     print('|'+'='*41+'|')
 
 
@@ -224,34 +225,36 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
 
 
     # Opçao [2]
-def editar_turma(nome_turma, dicionario, matricula_professor, nome_professor, novo_professor, lista_alunos, matricula_aluno):
-    if matricula_aluno == False and nome_professor == False:
-        troca_professor_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos)
-    elif novo_professor == False and lista_alunos == False:
+def editar_turma(nome_turma, dicionario, matricula_professor, nome_professor, lista_alunos, matricula_aluno, dicionario_aluno, dicionario_professor):
+    if matricula_aluno == False and nome_professor == False and dicionario_aluno == False:
+        troca_professor_turma(nome_turma, dicionario, matricula_professor, lista_alunos, dicionario_professor)
+    elif lista_alunos == False and dicionario_aluno == False and dicionario_professor == False:
         remover_aluno_turma(nome_turma, matricula_professor, nome_professor, matricula_aluno, dicionario)
     else:
-        inserir_aluno()
-def troca_professor_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos):
-    dicionario[nome_turma] = {matricula_professor:{novo_professor:lista_alunos}}
-    if nome_turma in dicionario:
-        print("\nProfessor trocado com sucesso ✅.")
-        salvar_dicionarios(dicionario, 'dicionario_turmas')
+        inserir_aluno(nome_turma, matricula_professor, nome_professor, lista_alunos, matricula_aluno, dicionario, dicionario_aluno)
+
+def troca_professor_turma(nome_turma, dicionario, matricula_professor, lista_alunos, dicionario_professor):
+    dicionario[nome_turma] = {matricula_professor:{dicionario_professor[matricula_professor]:lista_alunos}}
+    print("\nProfessor trocado com sucesso ✅.")
+    salvar_dicionarios(dicionario, 'dicionario_turmas')
 
 def remover_aluno_turma(nome_turma, matricula_professor, nome_professor, matricula_aluno, dicionario):
     lista_alunos = dicionario[nome_turma][matricula_professor][nome_professor]
-    for resto in lista_alunos:
-        for aluno in resto:
-            if matricula_aluno in aluno.keys():
-                resto.remove(aluno)
-                break
+    for aluno in lista_alunos:
+        if matricula_aluno in aluno.keys():
+            lista_alunos.remove(aluno)
+            break
     dicionario[nome_turma][matricula_professor][nome_professor] = lista_alunos
     print("\nAluno removido com sucesso ✅.")
     salvar_dicionarios(dicionario, 'dicionario_turmas')
 
-
-
-def inserir_aluno():
-    pass
+def inserir_aluno(nome_turma, matricula_professor, nome_professor, lista_aluno, matricula_aluno, dicionario, dicionario_aluno):
+    dicionario_aluno_novo = {}
+    dicionario_aluno_novo[matricula_aluno] = dicionario_aluno[matricula_aluno]
+    print(lista_aluno)
+    lista_aluno.append(dicionario_aluno_novo)
+    dicionario[nome_turma][matricula_professor][nome_professor] = lista_aluno
+    salvar_dicionarios(dicionario, 'dicionario_turmas')
 
     # Opçao [3]
 def ver_turma(nome_turma, dicionario, opcao):
@@ -294,9 +297,10 @@ def cadastrar_professor(nome_professor, dicionario):
     salvar_dicionarios(dicionario,'dicionario_professor')
     
     # Opçao [2] ✅
-def editar_professor(matricula_professor, nome_professor, dicionario_professores):
+def editar_professor(matricula_professor, dicionario_professores):
     dicionario_professores = carregar_dicionario('dicionario_professor')
-    nome_professor_novo = input('-'*55+'\n'f"Digite o nome novo do professor '{nome_professor}' ou digite '[F]' para cancelar a operação:\n 🔦 ")
+    dicionario_turmas = carregar_dicionario('dicionairo_turmas')
+    nome_professor_novo = input('-'*55+'\n'f"Digite o nome novo do professor ou digite '[F]' para cancelar a operação:\n 🔦 ")
     if nome_professor_novo == 's' or nome_professor_novo == 'S':
         print("Tchau 😢.")
     else:
@@ -324,14 +328,9 @@ def apagar_professor(dicionario):
     if matricula == False:
         print("Tchau 😢.")
     else:
-        nome_professor = input("Digite o nome do professor que deseja apagar:\n 🔦 ")
-        nome_professor = verificador_nome(matricula, nome_professor, dicionario, 'professor')
-        if nome_professor == False:
-            print("Tchau 😢.")
-        else:
-            del dicionario[matricula]
-            salvar_dicionarios(dicionario, 'dicionario_professor')
-            print("Professor apagado com sucesso ✅.")
+        del dicionario[matricula]
+        salvar_dicionarios(dicionario, 'dicionario_professor')
+        print("Professor apagado com sucesso ✅.")
 
     # Opçao [5] ✅
 def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
@@ -368,9 +367,9 @@ def cadastrar_aluno(nome_aluno, dicionario):
     salvar_dicionarios(dicionario,'dicionario_alunos')
 
     # Opçao [2]
-def editar_aluno(matricula_aluno, nome_aluno, dicionario_alunos):
+def editar_aluno(matricula_aluno, dicionario_alunos):
     dicionario_alunos = carregar_dicionario('dicionario_alunos')
-    nome_aluno_novo = input('-'*55+'\n'f"Digite o nome novo do Aluno '{nome_aluno}' ou digite '[f]' para cancelar a operação:\n 🔦 ")
+    nome_aluno_novo = input('-'*55+'\n'f"Digite o nome novo do Aluno ou digite '[f]' para cancelar a operação:\n 🔦 ")
     if nome_aluno_novo == 'f' or nome_aluno_novo == 'F':
         print("Tchau 😢.")
         pass
