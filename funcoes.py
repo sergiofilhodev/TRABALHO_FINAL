@@ -211,10 +211,17 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
                         if matricula_aluno in lista_alunos:
                             print(f"\nO aluno '{dicionario_alunos[matricula_aluno]}' já está cadastrado.")
                         else:
-                            if matricula_aluno != False:
-                                lista_alunos.append({matricula_aluno: dicionario_alunos[matricula_aluno]})
-                            else:
-                                print("\nAlgo deu errado")
+                            flag = True
+                            for alunos in lista_alunos:
+                                for matricula in alunos.keys():
+                                    if matricula == matricula_aluno:
+                                        print("\nAluno já está na turma ❌.\n")
+                                        flag = False
+                            if flag:
+                                if matricula_aluno != False:
+                                    lista_alunos.append({matricula_aluno: dicionario_alunos[matricula_aluno]})
+                                else:
+                                    print("\nAlgo deu errado")
                 if not aux and len(lista_alunos) >= 1:
                     dicionario_turma[nome_disciplina] = {matricula_professor: {dicionario_professores[matricula_professor]: lista_alunos}}
                     print('\n--- Matéria cadastrada com sucesso ✅---')

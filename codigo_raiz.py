@@ -109,16 +109,29 @@ while True:
                                                                 for matricula_aluno, nome_aluno in alunos.items():
                                                                     dicionario[matricula_aluno] = nome_aluno
                                         ver_dicionario(dicionario_alunos, 'lista dos alunos')
-                                        matricula_aluno_novo = input("Digite a matricula do aluno que desejas aicionar ou digite '[F]' para cancelar a operação:\n🔦 ")
-                                        if matricula_aluno_novo in 'fF':
-                                            print("Tchau 😢.")
-                                            continue
-                                        else:
-                                            matricula_aluno_novo = verificador_matricula(matricula_aluno_novo, dicionario_alunos)
-                                            if matricula_aluno_novo == False:
+                                        matricula_aluno_novo = input("Digite a matricula do aluno que desejas adicionar ou digite '[F]' para cancelar a operação:\n🔦 ")
+                                        aux = True
+                                        for nome_disciplina, resto in dicionario_turmas.items():
+                                            if nome_disciplina == lista_materia[int(opcao)-1]:
+                                                for matricula_professor, resto in resto.items():
+                                                    for nome_professor, lista_alunos in resto.items():
+                                                            for alunos in lista_alunos:
+                                                                for matricula_aluno, nome_aluno in alunos.items():
+                                                                    if matricula_aluno == matricula_aluno_novo:
+                                                                        print("Aluno já está na turma ❌.")
+                                                                        aux = False
+                                                                    else:
+                                                                        dicionario[matricula_aluno] = nome_aluno
+                                        if aux:
+                                            if matricula_aluno_novo in 'fF':
+                                                print("Tchau 😢.")
                                                 continue
                                             else:
-                                                editar_turma(nome_disciplina, dicionario_turmas, matricula_professor, nome_professor, lista_alunos, matricula_aluno_novo, dicionario_alunos, False)
+                                                matricula_aluno_novo = verificador_matricula(matricula_aluno_novo, dicionario_alunos)
+                                                if matricula_aluno_novo == False:
+                                                    continue
+                                                else:
+                                                    editar_turma(nome_disciplina, dicionario_turmas, matricula_professor, nome_professor, lista_alunos, matricula_aluno_novo, dicionario_alunos, False)
 
                                 elif op == 'f' or op == 'F':
                                     break
