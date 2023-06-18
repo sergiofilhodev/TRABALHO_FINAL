@@ -43,7 +43,7 @@ while True:
                             mostrar_tudo(opcao, dicionario_turmas, lista_materia)
                             while True:
                                 op = menu_edita_turma()
-                                if op == 's' or op == 'S':
+                                if op in 'fF':
                                     print("Tchau 😢.")
                                     break
                                 elif op == '1':
@@ -284,8 +284,8 @@ while True:
                 if lista_materia == False:
                     continue
                 else:
-                    opcao = input('-'*55+'\n'+"Digite o id da materia desejada ou digite '[S]'air: ")
-                    if opcao == "S" or opcao == 's':
+                    opcao = input('-'*55+'\n'+"Digite o id da materia desejada ou digite '[F]' para cancelar a operação: ")
+                    if opcao in 'fF':
                         pass
                     else:
                         mostrar_tudo(opcao, dicionario_turmas, lista_materia)
@@ -304,7 +304,7 @@ while True:
             if op == '1':
                 dicionario_alunos = carregar_dicionario('dicionario_alunos')
                 nome_aluno = input('-'*55+'\n'+"Digite o nome do aluno que deseja cadastrar ou digite '[F]' para cancelar a operação:\n 🔦 ")
-                if nome_aluno == 'f' or nome_aluno == 'F':
+                if nome_aluno in 'fF':
                     print("Tchau 😢.")
                     continue
                 nome_aluno = nome_composto(nome_aluno, 'aluno')
@@ -322,12 +322,15 @@ while True:
                 else:
                     dicionario_alunos = carregar_dicionario('dicionario_alunos')
                     ver_todos(dicionario_alunos, False)
-                    matricula_aluno = input('-'*55+'\n'+"Digite a matricula do aluno que deseja editar:\n 🔦 ")
-                    matricula_aluno = verificador_matricula(matricula_aluno, dicionario_alunos)
-                    if matricula_aluno == False:
-                        continue
-                    else:    
-                        editar_aluno(matricula_aluno, dicionario_alunos)
+                    matricula_aluno = input('-'*55+'\n'+"Digite a matricula do aluno que deseja editar ou digite '[F]' para cancelar a operação:\n 🔦 ")
+                    if matricula_aluno in 'fF':
+                        print("Tchau 😢.")
+                    else:
+                        matricula_aluno = verificador_matricula(matricula_aluno, dicionario_alunos)
+                        if matricula_aluno == False:
+                            continue
+                        else:    
+                            editar_aluno(matricula_aluno, dicionario_alunos)
 
             # menu [3] Alunos [3] ✅
             elif op == '3':
@@ -346,7 +349,7 @@ while True:
                     dicionario_alunos = carregar_dicionario('dicionario_alunos')
                     ver_todos(dicionario_alunos, False)
                     matricula_aluno = input("Digite o numero da matricula do aluno que deseja apagar ou digite '[F]' para cancelar a operação:\n 🔦 ")
-                    if matricula_aluno == 'f' or matricula_aluno == 'F':
+                    if matricula_aluno in 'fF':
                         print("Tchau 😢.")
                     else:
                         matricula_aluno = verificador_matricula(matricula_aluno, dicionario_alunos)
@@ -355,12 +358,12 @@ while True:
                         else:
                             apagar_aluno(dicionario_alunos, matricula_aluno)
 
-            elif op == 'V' or op == 'v':
+            elif op in 'vV':
                 break
             else:
                 print(f"\nOpção '{op}' invalida ❌.\n")
 
-    elif op == 'F' or op == 'f':
+    elif op in 'fF':
         print("\nPrograma Encerrado!😪\n")
         break
     else:
