@@ -236,13 +236,26 @@ while True:
                 if  verificador_dicionario(dicionario_professores, 'professor') == False:
                     continue
                 else:
-                    carregar_dicionario('dicionario_professor')
                     ver_dados_professor(dicionario_professores)
 
 
             # menu [2] Professores [4] ✅
             elif op == '4':
-                apagar_professor(dicionario_professores)
+                dicionario_professores = carregar_dicionario('dicionario_professor')
+                dicionario_turmas = carregar_dicionario('dicionario_turmas')
+                if verificador_dicionario(dicionario_professores, 'professor') == False:
+                    continue
+                else:
+                    ver_todos(dicionario_professores, False)
+                    matricula = input("Digite o numero da matricula do professor que deseja apagar ou digite '[F]' para cancelar a operação:\n 🔦 ")
+                    if matricula in 'fF':
+                        print("Tchau 😢.")
+                    else:
+                        matricula = verificador_matricula(matricula, dicionario_professores)
+                        if matricula == False:
+                            print("Tchau 😢.")
+                        else:
+                            apagar_professor(dicionario_professores, dicionario_turmas, matricula)
 
 
             # menu [2] Professores [5] ✅

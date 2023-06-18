@@ -316,19 +316,55 @@ def ver_dados_professor(dicionario):
     ver_todos(dicionario, False)
 
     # Opçao [4] ✅
-def apagar_professor(dicionario):
-    ver_todos(dicionario, False)
-    matricula = input("Digite o numero da matricula do professor que deseja apagar ou digite '[F]' para cancelar a operação:\n 🔦 ")
-    if matricula in 'fF':
-        print("Tchau 😢.")
+def apagar_professor(dicionario_professor, dicionario_turma, matricula_digitada):
+    aux = False
+    contador = 0
+    # Percore o dicionario turma verificando se o professor tem alguma turma.
+    dicionario_novo = {}
+    for nome_turma, resto_turma in dicionario_turma.items():
+        for matricula_professor, lista in resto_turma.items():
+            if matricula_professor == matricula_digitada:
+                aux = True
+                dicionario_novo[contador+1] = nome_turma
+    for numero_contador, nome_disciplina in dicionario_novo.items():
+        del dicionario_turma[nome_disciplina]
+    # Apaga e salva o dicionario turma e apaga o professor do dicionario professor.
+    if aux:
+        del dicionario_professor[matricula_digitada]
+        salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
+        salvar_dicionarios(dicionario_professor, 'dicionario_professor')
+        print("Professor apagado com sucesso ✅.")
     else:
-        matricula = verificador_matricula(matricula, dicionario)
-        if matricula == False:
-            print("Tchau 😢.")
-        else:
-            del dicionario[matricula]
-            salvar_dicionarios(dicionario, 'dicionario_professor')
-            print("Professor apagado com sucesso ✅.")
+        del dicionario_professor[matricula_digitada]
+        salvar_dicionarios(dicionario_professor, 'dicionario_professor')
+        print("Professor apagado com successo ✅.")
+
+# def apagar_professor(dicionario_professor, dicionario_turma, matricula):
+#     aux = False
+#     turmas_a_remover = []  # Lista para armazenar as turmas a serem removidas
+
+#     # Localiza as turmas que contêm o professor
+#     for nome_turma, resto in dicionario_turma.items():
+#         for matricula_professor, resto in resto.items():
+#             if matricula_professor == matricula:
+#                 aux = True
+#                 turmas_a_remover.append(nome_turma)  # Adiciona a turma à lista de remoção
+
+#     # Remove as turmas
+#     for nome_turma in turmas_a_remover:
+#         del dicionario_turma[nome_turma]
+
+#     # Remove o professor do dicionário professor
+#     if aux:
+#         salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
+#         del dicionario_professor[matricula]
+#         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
+#         print("Professor apagado com sucesso ✅.")
+#     else:
+#         del dicionario_professor[matricula]
+#         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
+
+
 
     # Opçao [5] ✅
 def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
