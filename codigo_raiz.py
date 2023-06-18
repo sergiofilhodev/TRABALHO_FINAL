@@ -342,8 +342,8 @@ while True:
                         matricula_aluno = verificador_matricula(matricula_aluno, dicionario_alunos)
                         if matricula_aluno == False:
                             continue
-                        else:    
-                            editar_aluno(matricula_aluno, dicionario_alunos)
+                        else:
+                            editar_aluno(matricula_aluno, dicionario_alunos, dicionario_turmas)
 
             # menu [3] Alunos [3] ✅
             elif op == '3':
@@ -369,7 +369,7 @@ while True:
                         if matricula_aluno == False:
                             continue
                         else:
-                            apagar_aluno(dicionario_alunos, matricula_aluno)
+                            apagar_aluno(dicionario_alunos, matricula_aluno, dicionario_turmas)
 
             elif op in 'vV':
                 break

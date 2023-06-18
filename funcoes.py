@@ -319,17 +319,18 @@ def ver_dados_professor(dicionario):
 def apagar_professor(dicionario_professor, dicionario_turma, matricula_digitada):
     aux = False
     contador = 0
-    # Percore o dicionario turma verificando se o professor tem alguma turma.
+    # Percore o dicionario turma verificando se o professor tem alguma turma e adiciona em outro dicionario.
     dicionario_novo = {}
     for nome_turma, resto_turma in dicionario_turma.items():
         for matricula_professor, lista in resto_turma.items():
             if matricula_professor == matricula_digitada:
                 aux = True
-                dicionario_novo[contador+1] = nome_turma
-    for numero_contador, nome_disciplina in dicionario_novo.items():
-        del dicionario_turma[nome_disciplina]
+                contador += 1
+                dicionario_novo[contador] = nome_turma
     # Apaga e salva o dicionario turma e apaga o professor do dicionario professor.
     if aux:
+        for numero_contador, nome_disciplina in dicionario_novo.items():
+            del dicionario_turma[nome_disciplina]
         del dicionario_professor[matricula_digitada]
         salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
@@ -338,33 +339,6 @@ def apagar_professor(dicionario_professor, dicionario_turma, matricula_digitada)
         del dicionario_professor[matricula_digitada]
         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
         print("Professor apagado com successo ✅.")
-
-# def apagar_professor(dicionario_professor, dicionario_turma, matricula):
-#     aux = False
-#     turmas_a_remover = []  # Lista para armazenar as turmas a serem removidas
-
-#     # Localiza as turmas que contêm o professor
-#     for nome_turma, resto in dicionario_turma.items():
-#         for matricula_professor, resto in resto.items():
-#             if matricula_professor == matricula:
-#                 aux = True
-#                 turmas_a_remover.append(nome_turma)  # Adiciona a turma à lista de remoção
-
-#     # Remove as turmas
-#     for nome_turma in turmas_a_remover:
-#         del dicionario_turma[nome_turma]
-
-#     # Remove o professor do dicionário professor
-#     if aux:
-#         salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
-#         del dicionario_professor[matricula]
-#         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
-#         print("Professor apagado com sucesso ✅.")
-#     else:
-#         del dicionario_professor[matricula]
-#         salvar_dicionarios(dicionario_professor, 'dicionario_professor')
-
-
 
     # Opçao [5] ✅
 def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
@@ -400,16 +374,41 @@ def cadastrar_aluno(nome_aluno, dicionario):
     salvar_dicionarios(dicionario,'dicionario_alunos')
 
     # Opçao [2]
-def editar_aluno(matricula_aluno, dicionario_alunos):
+def editar_aluno(matricula_digitada, dicionario_alunos, dicionario_turma):
     dicionario_alunos = carregar_dicionario('dicionario_alunos')
     nome_aluno_novo = input('-'*55+'\n'f"Digite o nome novo do Aluno ou digite '[f]' para cancelar a operação:\n 🔦 ")
     if nome_aluno_novo in 'fF':
         print("Tchau 😢.")
         pass
     else:
-        dicionario_alunos[matricula_aluno] = nome_aluno_novo
-        salvar_dicionarios(dicionario_alunos, 'dicionario_alunos')
-        print('-'*55+'\n\nEditador com sucesso✅.\n'+'\n'+'-'*55)
+        aux = False
+        # Verificando aluno ma disciplina.
+        for nome_disciplina, resto_turma in dicionario_turma.items():
+            for matricula_professor, resto in resto_turma.items():
+                for nome_professor, lista_alunos in resto.items():
+                    for alunos in lista_alunos:
+                        for matricula, nome_aluno in alunos.items():
+                            if matricula_digitada == matricula:
+                                aux = True
+        
+        if aux:
+            # Trocando alono na disciplina.
+            for nome_disciplina, resto_turma in dicionario_turma.items():
+                for matricula_professor, resto in resto_turma.items():
+                    for nome_professor, lista_alunos in resto.items():
+                        for alunos in lista_alunos:
+                            for matricula, nome_aluno in alunos.items():
+                                if matricula_digitada == matricula:
+                                    aux = True
+                                    alunos[matricula] = nome_aluno_novo
+            salvar_dicionarios(dicionario_turma,'dicionario_turmas')
+            dicionario_alunos[matricula_digitada] = nome_aluno_novo
+            salvar_dicionarios(dicionario_alunos, 'dicionario_alunos')
+            print('-'*55+'\n\nEditador com sucesso✅.\n'+'\n'+'-'*55)
+        else:
+            dicionario_alunos[matricula_digitada] = nome_aluno_novo
+            salvar_dicionarios(dicionario_alunos, 'dicionario_alunos')
+            print('-'*55+'\n\nEditador com sucesso✅.\n'+'\n'+'-'*55)
 
     # Opçao [3]
 def visualizar_aluno(dicionario):
@@ -417,7 +416,31 @@ def visualizar_aluno(dicionario):
     ver_todos(dicionario, False)
 
     # Opçao [4]
-def apagar_aluno(dicionario, matricula):
-    del dicionario[matricula]
-    salvar_dicionarios(dicionario, 'dicionario_alunos')
-    print("\nAluno apagado com sucesso ✅.")
+def apagar_aluno(dicionario, matricula_digitada, dicionario_turma):
+    aux = False
+    # Verificando aluno ma disciplina.
+    for nome_disciplina, resto_turma in dicionario_turma.items():
+        for matricula_professor, resto in resto_turma.items():
+            for nome_professor, lista_alunos in resto.items():
+                for alunos in lista_alunos:
+                    for matricula_aluno, nome_aluno in alunos.items():
+                        if matricula_aluno == matricula_digitada:
+                            aux = True
+    if aux:
+        # Trocando alono na disciplina.
+        for nome_disciplina, resto_turma in dicionario_turma.items():
+            for matricula_professor, resto in resto_turma.items():
+                for nome_professor, lista_alunos in resto.items():
+                    for alunos in lista_alunos:
+                        for matricula, nome_aluno in alunos.items():
+                            if matricula_digitada == matricula:
+                                aux = True
+                                lista_alunos.remove(alunos)
+        salvar_dicionarios(dicionario_turma,'dicionario_turmas')
+        del dicionario[matricula_digitada]
+        salvar_dicionarios(dicionario, 'dicionario_alunos')
+        print('-'*55+'\n\nEditador com sucesso✅.\n'+'\n'+'-'*55)
+    else:
+        del dicionario[matricula_digitada]
+        salvar_dicionarios(dicionario, 'dicionario_alunos')
+        print('-'*55+'\n\nEditador com sucesso✅.\n'+'\n'+'-'*55)
