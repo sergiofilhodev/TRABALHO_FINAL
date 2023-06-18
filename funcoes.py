@@ -133,9 +133,9 @@ def nome_composto(nome, nome_aplicação):
                 return nome_composto(nome, nome_aplicação)
 
 # Função de ver a lista de qualquer dicionario
-def ver_lista(dicionario, nome_lista):
+def ver_dicionario(dicionario, nome_aplicacao):
     print('\n'+"="*16+'>PESQUISA<'+"="*16)
-    print(f"|{nome_lista:=^40}|")
+    print(f"|{nome_aplicacao:=^40}|")
     print(f'|{"MATRICULA:":^11}{"NOME:":^29}|')
     for matricula, nome in dicionario.items():
         print('|'+'-'*40+'|')
@@ -155,11 +155,12 @@ def mostrar_tudo(pergunta, dicionario, lista_materia):
             print('|'+'-'*41+'|')
             print(f"|{'Aluno(s)':=^41}|")
             print('|'+'-'*41+'|')
-            for lista in alunos:
-                for matricula_alunos, nomes_alunos in lista.items():
-                    print('|'+'-'*41+'|')
-                    print(f'|{matricula_alunos:^15}|{nomes_alunos:^25}|')
-                    print('|'+'-'*41+'|')
+            for lista_aluno in alunos:
+                for alunos in lista_aluno:
+                    for matricula_alunos, nomes_alunos in alunos.items():
+                        print('|'+'-'*41+'|')
+                        print(f'|{matricula_alunos:^15}|{nomes_alunos:^25}|')
+                        print('|'+'-'*41+'|')
     print('|'+'='*41+'|')
 
 
@@ -188,9 +189,9 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
             else:
                 criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nome_disciplina)
     else:
-        ver_lista(dicionario_professores, 'Lista dos professores')
-        ver_lista(dicionario_alunos, 'Lista dos alunos')
-        matricula_professor = input("Digite a matricula do professor para adicionar a disciplina ou digite '[F]' pra parar de adicionar:\n 🔦 ")
+        ver_dicionario(dicionario_professores, 'Lista dos professores')
+        ver_dicionario(dicionario_alunos, 'Lista dos alunos')
+        matricula_professor = input("Digite a matricula do professor para adicionar a disciplina ou digite '[F]' para cancelar a operação:\n 🔦 ")
         if matricula_professor == 'F' or matricula_professor == 'f':
             print("Tchau 😢.")
         else:
@@ -201,7 +202,7 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
                 aux = True
                 while aux:
                     matricula_aluno = input("Digite a matricula do aluno que deseja adicionar ou digite '[F]' pra parar de adicionar:\n 🔦 ")
-                    if matricula_aluno == 'f' or matricula_professor == 'F':
+                    if matricula_aluno == 'f' or matricula_aluno == 'F':
                         aux = False
                         break
                     else:
@@ -210,26 +211,52 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
                             print(f"\nO aluno '{dicionario_alunos[matricula_aluno]}' já está cadastrado.")
                         else:
                             if matricula_aluno != False:
-                                lista_alunos.append({matricula_aluno:dicionario_alunos[matricula_aluno]})
+                                lista_alunos.append({matricula_aluno: dicionario_alunos[matricula_aluno]})
                             else:
                                 print("\nAlgo deu errado")
-                if aux == False and len(lista_alunos) >= 1:
+
+                if not aux and len(lista_alunos) >= 1:
                     dicionario_turma[nome_disciplina] = {matricula_professor: {dicionario_professores[matricula_professor]: lista_alunos}}
-                    print('\n--- Materia cadastrada com sucesso ✅---')
+                    print('\n--- Matéria cadastrada com sucesso ✅---')
                     salvar_dicionarios(dicionario_turma, 'dicionario_turmas')
                     return True
 
 
+
     # Opçao [2]
-def editar_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos):
+def editar_turma(nome_turma, dicionario, matricula_professor, nome_professor, novo_professor, lista_alunos, matricula_aluno):
+    if matricula_aluno == False and nome_professor == False:
+        troca_professor_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos)
+    elif novo_professor == False and lista_alunos == False:
+        remover_aluno_turma(nome_turma, matricula_professor, nome_professor, matricula_aluno, dicionario)
+    else:
+        inserir_aluno()
+def troca_professor_turma(nome_turma, dicionario, matricula_professor, novo_professor, lista_alunos):
     dicionario[nome_turma] = {matricula_professor:{novo_professor:lista_alunos}}
     if nome_turma in dicionario:
         print("\nProfessor trocado com sucesso ✅.")
         salvar_dicionarios(dicionario, 'dicionario_turmas')
 
+def remover_aluno_turma(nome_turma, matricula_professor, nome_professor, matricula_aluno, dicionario):
+    lista_alunos = dicionario[nome_turma][matricula_professor][nome_professor]
+    for resto in lista_alunos:
+        for aluno in resto:
+            if matricula_aluno in aluno.keys():
+                resto.remove(aluno)
+                break
+    dicionario[nome_turma][matricula_professor][nome_professor] = lista_alunos
+    print("\nAluno removido com sucesso ✅.")
+    salvar_dicionarios(dicionario, 'dicionario_turmas')
+
+
+
+def inserir_aluno():
+    pass
+
     # Opçao [3]
 def ver_turma(nome_turma, dicionario, opcao):
     mostrar_tudo(nome_turma, dicionario, opcao)
+
     # Opçao [4]
 def apagar_turma(dicionario, nome_turma):
     del dicionario[nome_turma]
@@ -269,7 +296,7 @@ def cadastrar_professor(nome_professor, dicionario):
     # Opçao [2] ✅
 def editar_professor(matricula_professor, nome_professor, dicionario_professores):
     dicionario_professores = carregar_dicionario('dicionario_professor')
-    nome_professor_novo = input(f'-'*55+'\n'"Digite o nome novo do professor '{nome_professor}' ou digite '[s]'air:\n 🔦 ")
+    nome_professor_novo = input('-'*55+'\n'f"Digite o nome novo do professor '{nome_professor}' ou digite '[F]' para cancelar a operação:\n 🔦 ")
     if nome_professor_novo == 's' or nome_professor_novo == 'S':
         print("Tchau 😢.")
     else:
@@ -291,6 +318,7 @@ def ver_dados_professor(dicionario):
 
     # Opçao [4] ✅
 def apagar_professor(dicionario):
+    ver_todos(dicionario, False)
     matricula = input("Digite o numero da matricula do professor que deseja apagar:\n 🔦 ")
     matricula = verificador_matricula(matricula, dicionario)
     if matricula == False:

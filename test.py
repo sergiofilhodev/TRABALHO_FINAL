@@ -84,8 +84,8 @@
 #                     print('|'+'-'*40+'|')
 #     print('|'+'='*40+'|')
 dicionario_aluno = {"1": "Kauan Emanuel", "2": "Anderson Lucas", "3": "Yasmim Moura"}
-dicionario_professor = {"1": "Thomaz maia", "3": "Cataryna Fontenele"}
-dicionario_turma = {"Matematica": {"3": {"Cataryna Fontenele": [{"1": "Kauan Emanuel"}, {"2": "Anderson Lucas"}]}}}
+dicionario_professores = {"1": "Thomaz maia", "3": "Cataryna Fontenele"}
+dicionario_turmas = {"Matematica": {"3": {"Cataryna Fontenele": [{"1": "Kauan Emanuel"}, {"2": "Anderson Lucas"}]}}}
 
 def menu_edita_turma():
     print('''
@@ -98,3 +98,39 @@ def menu_edita_turma():
     op = input("Digite um opção ou digite '[F]' para sair:\n 🔦 ")
     print("\n====================================")
     return op
+
+# while True:
+#     op = menu_edita_turma()
+#     if op == 's' or op == 'S':
+#         print("Tchau 😢.")
+#         break
+#     elif op == '1':
+#         alunos = []
+#         for nome_disciplina, matricula_professor in dicionario_turmas.items():
+#             if nome_disciplina == dicionario_turmas[lista_materia[int(opcao)-1]]:
+#                 lista_materia.append(nome_disciplina)
+#                 for nome_professor, lista_alunos in matricula_professor.items():
+#                     alunos.append(lista_alunos)
+                    
+#         ver_lista(dicionario_professores, 'Lista dos professores')
+#         matricula_professor = input("Digite a matricula do novo professor ou digite '[F]' para cancelar a troca:\n 🔦 ")
+#         if matricula_professor == 'F' or matricula_professor == 'f':
+#             print('Operação Cancelada.')
+#         else:
+#             matricula_professor = verificador_matricula(matricula_professor, dicionario_professores)
+#             if matricula_professor == False:
+#                 continue
+#             else:
+#                 novo_professor = input("Digite o novo nome do professor ou digite '[F]' para cancelar a troca:\n 🔦 ")
+#                 if novo_professor == "F" or novo_professor == 'f':
+#                     print('Operação Cancelada.')
+#                 else:
+#                     novo_professor = verificador_nome(matricula_professor, novo_professor, dicionario_professores, 'professor')
+#                     if novo_professor == False:
+#                         continue
+#                     else:
+#                         editar_turma(lista_materia[int(opcao)-1], dicionario_turmas, matricula_professor, novo_professor, alunos)
+#     elif op == 'f' or op == 'F':
+#         break
+#     else:
+#         print('\n\n'+f"Opção '{op}' invalida ❌."+'\n\n')

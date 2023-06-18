@@ -27,6 +27,18 @@ def menu_turmas():
     print('\n===========================')
     return op
 
+def menu_edita_turma():
+    print('''
+==========>Menu da edição<==========
+[1] - Trocar professor.
+[2] - Deletar aluno.
+[3] - Inserir aluno.
+====================================
+    ''')
+    op = input("Digite um opção ou digite '[F]' para sair:\n 🔦 ")
+    print("\n====================================")
+    return op
+
 # ------------------------------------------------------------------------
 # Menu que da acesso ao CRUD dos Professores.
 def menu_professores():
@@ -58,16 +70,4 @@ def menu_alunos():
     ''')
     op = input("Digite a opção desejada ou escreva '[V]' para voltar:\n 🔦 ")
     print('\n=====================================')
-    return op
-
-def menu_edita_turma():
-    print('''
-==========>Menu da edição<==========
-[1] - Trocar professor.
-[2] - Deletar aluno.
-[3] - Inserir aluno.
-====================================
-    ''')
-    op = input("Digite um opção ou digite '[F]' para sair:\n 🔦 ")
-    print("\n====================================")
     return op
