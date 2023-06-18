@@ -349,24 +349,12 @@ def apagar_professor(dicionario_professor, dicionario_turma, matricula_digitada)
 
     # Opçao [5] ✅
 def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
-    if matricula_digitada == False:
-        pass
-    else:
-        print('\n'+"="*17+'>Turmas<'+"="*17)
-        print(f"|{nome_lista:=^42}|")
-        if matricula_digitada == False:
-            print("Tchau 😢.")
-        else:
-            aux = False
-            for nome_disciplina in dicionario_turma.keys():
-                for matricula_professor in dicionario_turma[nome_disciplina].keys():
-                    if matricula_professor == matricula_digitada:
-                        print('='*44+'\n'f'|{nome_disciplina:^42}|'+'\n'+'='*44)
-                        aux = True
-
-            if aux == False:
-                print('='*44+'\n'f"|{'Esse professor não possui turma.':^42}|"'\n'+'='*44)
-
+    print('\n'+"="*17+'>Turmas<'+"="*17)
+    print(f"|{nome_lista:=^42}|")
+    for nome_disciplina in dicionario_turma.keys():
+        for matricula_professor in dicionario_turma[nome_disciplina].keys():
+            if matricula_professor == matricula_digitada:
+                print('='*44+'\n'f'|{nome_disciplina:^42}|'+'\n'+'='*44)
 # ------------------------------------------------------------------------
 # Opções do Menu dos Alunos.
     # Opçao [1]
