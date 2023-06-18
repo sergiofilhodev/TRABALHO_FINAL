@@ -25,7 +25,7 @@ def carregar_dicionario(nome_do_arquivo):
 # Função de pesquisa nomes
 def pesquisa_nomes(dicionario, nome):
     lista_nome = nome.split()
-    if nome == 'f' or nome == 'F':
+    if nome in 'fF':
         print('Tchau😢.')
         return False
     else:
@@ -45,8 +45,8 @@ def ver_todos(dicionario, lista_nome):
         if len(dicionario_nomes) == 0:
             print(f"'{nome}' não encontrado ❌.\n")
             print('-'*55+"\n\n"'Tente novamente🔄.\n')
-            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[S]air':\n 🔦 ")
-            if nome == 's' or nome == 'S':
+            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[F]' para cancelar a operação:\n 🔦 ")
+            if nome in 'fF':
                 print('Tchau 😢.')
                 return False
             else:
@@ -65,8 +65,8 @@ def ver_todos(dicionario, lista_nome):
         if len(dicionario_nomes) == 0:
             print(f"'{nome}' não encontrado ❌.\n")
             print('-'*55+"\n\n"'Tente novamente🔄.\n')
-            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[S]air':\n 🔦 ")
-            if nome == 's' or nome == 'S':
+            nome = input('-'*55+'\n'"Digite o nome novamente ou digite '[F]' para cancelar a operação:\n 🔦 ")
+            if nome in 'fF':
                 print('Tchau 😢.')
                 return False
             else:
@@ -90,7 +90,7 @@ def verificador_matricula(matricula, dicionario):
         return matricula
     else:
         print(f'Matricula "{matricula}" não existe.\n'+"-"*55)
-        matricula_novamente = input('-'*55+'\n'"Digite novamente a matricula ou digite '[V]' para cancelar a operação:\n 🔦 ")
+        matricula_novamente = input('-'*55+'\n'"Digite novamente a matricula ou digite '[F]' para cancelar a operação:\n 🔦 ")
         if matricula_novamente == 'f' or matricula_novamente == 'F':
             print("Tchau 😢.")
             return False
@@ -104,8 +104,8 @@ def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
         return nome
     else:
         print(f'"{nome}" não existi.\n'+"="*55)
-        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao} ou digite '[V]' para cancelar a operação:\n 🔦 ")
-        if nome in 'vV':
+        nome = input('-'*55+'\n'f"Digite novamente o nome do {nome_aplicacao} ou digite '[F]' para cancelar a operação:\n 🔦 ")
+        if nome in 'fF':
             print('Tchau 😢.')
             return False
         else:
@@ -115,8 +115,8 @@ def verificador_nome(matricula, nome, dicionario, nome_aplicacao):
 def nome_composto(nome, nome_aplicação):
     if nome.replace(' ','').isalpha() == False:
         print('-'*61+'\n\n'"\nA senha deve conter somente letras e sem acento.\n EX: 'Thomaz maia'\n")
-        nome = input('-'*61+'\n'f"Digite novamente o nome do {nome_aplicação} ou digite 'sair':\n 🔦 ")
-        if nome == 'sair':
+        nome = input('-'*61+'\n'f"Digite novamente o nome do {nome_aplicação} ou digite '[F]' para cancelar a operação:\n 🔦 ")
+        if nome in 'fF':
             print('Tchau 😢.')
             return False
         else:
@@ -127,8 +127,8 @@ def nome_composto(nome, nome_aplicação):
             return nome
         else:
             print('-'*61+'\n\n'"A o nome do professor só tem que ter nome composto e sem acento.\n EX: 'Thomaz maia'\n")
-            nome = input('-'*61+'\n\n'f"Digite novamente o nome do {nome_aplicação} ou digite 'sair':\n 🔦 ")
-            if nome == 'sair':
+            nome = input('-'*61+'\n\n'f"Digite novamente o nome do {nome_aplicação} ou digite '[F]' para cancelar a operação:\n 🔦 ")
+            if nome in 'fF':
                 print('Tchau 😢.')
                 return False
             else:
@@ -179,12 +179,12 @@ def criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nom
         if nome_disciplina == 'F':
             print("Tchau 😢.")
             return False
-        elif not nome_disciplina == 'F':
+        elif not nome_disciplina in 'F':
             criar_turma(dicionario_turma, dicionario_alunos, dicionario_professores, nome_disciplina)
         else:
             print("Opção invalida.")
             nome_disciplina = input("Digite o nome da disciplina novamente ou digite '[F]' para cancelar a operação:\n 🔦 ").title()
-            if nome_disciplina == 'F':
+            if nome_disciplina in 'F':
                 print("Tchau 😢.")
                 pass
             else:
@@ -266,7 +266,6 @@ def apagar_turma(dicionario, nome_turma):
     salvar_dicionarios(dicionario, 'dicionario_turmas')
     print("\n Turma apagada com sucesso ✅.")
 
-    pass
     # Opção [5] / Função Global
 def ver_todas_turmas(dicionario):
     lista_disciplinas = []
@@ -301,7 +300,7 @@ def editar_professor(matricula_professor, dicionario_professores):
     dicionario_professores = carregar_dicionario('dicionario_professor')
     dicionario_turmas = carregar_dicionario('dicionairo_turmas')
     nome_professor_novo = input('-'*55+'\n'f"Digite o nome novo do professor ou digite '[F]' para cancelar a operação:\n 🔦 ")
-    if nome_professor_novo == 's' or nome_professor_novo == 'S':
+    if nome_professor_novo in 'fF':
         print("Tchau 😢.")
     else:
         nome_professor_novo = nome_composto(nome_professor_novo, 'professor')
@@ -323,14 +322,17 @@ def ver_dados_professor(dicionario):
     # Opçao [4] ✅
 def apagar_professor(dicionario):
     ver_todos(dicionario, False)
-    matricula = input("Digite o numero da matricula do professor que deseja apagar:\n 🔦 ")
-    matricula = verificador_matricula(matricula, dicionario)
-    if matricula == False:
+    matricula = input("Digite o numero da matricula do professor que deseja apagar ou digite '[F]' para cancelar a operação:\n 🔦 ")
+    if matricula in 'fF':
         print("Tchau 😢.")
     else:
-        del dicionario[matricula]
-        salvar_dicionarios(dicionario, 'dicionario_professor')
-        print("Professor apagado com sucesso ✅.")
+        matricula = verificador_matricula(matricula, dicionario)
+        if matricula == False:
+            print("Tchau 😢.")
+        else:
+            del dicionario[matricula]
+            salvar_dicionarios(dicionario, 'dicionario_professor')
+            print("Professor apagado com sucesso ✅.")
 
     # Opçao [5] ✅
 def visualizar_turmas_professor(dicionario_turma, nome_lista, matricula_digitada):
@@ -370,7 +372,7 @@ def cadastrar_aluno(nome_aluno, dicionario):
 def editar_aluno(matricula_aluno, dicionario_alunos):
     dicionario_alunos = carregar_dicionario('dicionario_alunos')
     nome_aluno_novo = input('-'*55+'\n'f"Digite o nome novo do Aluno ou digite '[f]' para cancelar a operação:\n 🔦 ")
-    if nome_aluno_novo == 'f' or nome_aluno_novo == 'F':
+    if nome_aluno_novo in 'fF':
         print("Tchau 😢.")
         pass
     else:
