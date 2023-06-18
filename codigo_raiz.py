@@ -136,7 +136,7 @@ while True:
                         continue
                     else:
                         opcao = input('-'*55+'\n'+"Digite o numero da materia desejada ou digite digite '[F]' para cancelar a operação:\n 🔦 ")
-                        if opcao in 'fF'':
+                        if opcao in 'fF':
                             pass
                         else:
                             ver_dicionario(dicionario_professores, 'Lista dos professores')
