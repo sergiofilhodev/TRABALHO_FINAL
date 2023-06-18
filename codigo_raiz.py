@@ -93,7 +93,7 @@ while True:
                                                 if matricula_remover == False:
                                                     continue
                                                 else:
-                                                    editar_turma(lista_materia[int(opcao)-1], dicionario_turmas, matricula_professor, nome_professor, False, False, matricula_remover, False, False)
+                                                    editar_turma(lista_materia[int(opcao)-1], dicionario_turmas, matricula_professor, nome_professor, False, matricula_remover, False, False)
 
                                 elif op == '3':
                                     dicionario_turmas = carregar_dicionario('dicionario_turmas')
@@ -152,8 +152,7 @@ while True:
                         if opcao in 'fF':
                             pass
                         else:
-                            ver_dicionario(dicionario_professores, 'Lista dos professores')
-                            ver_dicionario(dicionario_alunos, 'Lista dos alunos')
+                            mostrar_tudo(opcao, dicionario_turmas, lista_materia)
 
             # menu [1] Turmas [4] ✅
             elif op == '4':
@@ -232,7 +231,6 @@ while True:
                                                 for matricula_professor, resto in resto.items():
                                                     if matricula_professor == matricula:
                                                         for nome, lista_aluno in resto.items():
-                                                            print(lista_aluno)
                                                             dicionario_turmas[nome_disciplina][matricula] = {nome_professor: lista_aluno}
                                             dicionario_professores[matricula] = nome_professor
                                             salvar_dicionarios(dicionario_turmas, 'dicionario_turmas')
@@ -240,7 +238,6 @@ while True:
                                         else:
                                             dicionario_professores[matricula] = nome_professor
                                             salvar_dicionarios(dicionario_professores, 'dicionario_professor')
-                                    # editar_professor(matricula, dicionario_professores)
 
 
             # menu [2] Professores [3] ✅
